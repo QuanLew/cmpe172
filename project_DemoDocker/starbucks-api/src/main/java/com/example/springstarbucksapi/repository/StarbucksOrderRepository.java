@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StarbucksOrderRepository extends JpaRepository<StarbucksOrder, Long> {
-
+    StarbucksOrder findStarbucksOrderByRegister(String register);
 }
 
 

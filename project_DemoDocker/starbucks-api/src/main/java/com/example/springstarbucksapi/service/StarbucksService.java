@@ -63,7 +63,7 @@ public class StarbucksService {
     }
 
     // https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html
-    private HashMap<String, StarbucksOrder> orders = new HashMap<>();
+    //private HashMap<String, StarbucksOrder> orders = new HashMap<>();
 
     /* https://docs.spring.io/spring-data/jpa/docs/2.4.5/api/ */
 
@@ -86,7 +86,7 @@ public class StarbucksService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Order Request!");
         }
         // check for active order
-        StarbucksOrder active = orders.get(regid);
+        StarbucksOrder active = getActiveOrder(regid);
         if (active != null) {
             System.out.println("Active Order (Reg ID = " + regid + ") => " + active);
             if (active.getStatus().equals("Ready for Payment."))
@@ -189,7 +189,8 @@ public class StarbucksService {
 
     /* Get Details of a Starbucks Order */
     public StarbucksOrder getActiveOrder(String regid) {
-        return orders.get(regid);
+
+        return ordersRepository.findStarbucksOrderByRegister(regid);
     }
 
     /* Clear Active Order */
